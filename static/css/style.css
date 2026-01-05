@@ -1,0 +1,19 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+/* --- CSS VARIABLES --- */
+:root {
+  --primary-color: #000000;
+  --bg-color: #ffffff;
+  --text-color: #333333;
+}
