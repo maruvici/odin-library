@@ -6,13 +6,14 @@
 "use strict";
 document.addEventListener("DOMContentLoaded", () => {
   console.log("DOM fully loaded and parsed");
+  init();
 });
 
 /**
  * Functions, Constructors and Global Variables
  */
 
-const myLibrary = [];
+const myLibrary = [ ];
 
 function Book(title, author, pages, read, id) {
   this.title = title;
@@ -23,19 +24,21 @@ function Book(title, author, pages, read, id) {
 }
 
 // Toggle read status
-Book.prototype.readUnread = function () {
+Book.prototype.toggleRead = function () {
   this.read = !this.read;
 };
 
-function addBookToLibrary(title, author, pages) {
+function addBook(title, author, pages) {
   const id = crypto.randomUUID();
   const book = new Book(title, author, pages, false, id);
   myLibrary.push(book);
-}
+  refreshDisplay();
+}  
 
 function displayBook(book) {
   const bookContainer = document.querySelector(".bookContainer");
-  const bookCard = document.createElement(".bookCard");
+  const bookCard = document.createElement("div");
+  bookCard.classList.add("bookCard")
   bookCard.setAttribute("data-id", book.id);
 
   const pTitle = document.createElement("p");
@@ -60,25 +63,30 @@ function displayBook(book) {
 
   const removeButton = document.createElement("button");
   removeButton.textContent = "Remove";
-  removeButton.addEventListener("click", removeBookInLibrary());
+  removeButton.addEventListener("click", removeBook);
 
   const readButton = document.createElement("button");
-  removeButton.textContent = "Read";
-  readButton.addEventListener("click", readBook());
+  if (book.read) {
+    readButton.textContent = "Unread";
+  } else {
+    readButton.textContent = "Read";
+  }
+  readButton.addEventListener("click", readBook);
 
   bookCard.appendChild(pTitle);
   bookCard.appendChild(pAuthor);
   bookCard.appendChild(pPages);
   bookCard.appendChild(pRead);
   bookCard.appendChild(removeButton);
+  bookCard.appendChild(readButton);
   bookContainer.appendChild(bookCard);
 }
 
 function displayBooksInLibrary() {
-  myLibrary.forEach(displayBook());
+  myLibrary.forEach((book) => displayBook(book));
 }
 
-function removeBookInLibrary(event) {
+function removeBook(event) {
   const bookCard = event.target.parentElement;
   const bookId = bookCard.dataset.id;
   const removedBook = myLibrary.find((book) => book.id === bookId);
@@ -93,37 +101,40 @@ function removeBookInLibrary(event) {
     // splice if index/book in library
     myLibrary.splice(removedBookIndex, 1);
   }
+
+  refreshDisplay();
 }
 
 function readBook(event) {
   const bookCard = event.target.parentElement;
   const bookId = bookCard.dataset.id;
   const readBook = myLibrary.find((book) => book.id === bookId);
-  const readButton = event.target;
 
   if (readBook === undefined) {
     alert("No book exists to read.");
     return;
   }
-  readBook.readUnread();
+  readBook.toggleRead();
 
-  if (readBook.read) {
-    readButton.textContent = "Unread";
-  } else {
-    readButton.textContent = "Read";
-  }
+  refreshDisplay();
+}
+
+function refreshDisplay() {
+    const messageContainer = document.querySelector("h1[class=messageContainer]");
+    const bookContainer = document.querySelector(".bookContainer");
+    bookContainer.replaceChildren();
+    if (myLibrary.length === 0) {
+        messageContainer.textContent = "No books added. Add some!"
+    } else {
+        messageContainer.textContent = ""
+    }
+    displayBooksInLibrary();
 }
 
 /**
  * Main application logic
  */
 
-function init() {}
-
-/**
- * Event Listeners
- */
-
-function setupEventListeners() {
-  // Add your event listeners here
+function init() {
+    refreshDisplay();
 }
