@@ -1,3 +1,13 @@
+@font-face {
+  font-family: "Roboto";
+  src: url(../assets/font/Roboto-Regular.ttf);
+}
+
+@font-face {
+  font-family: "Norse";
+  src: url(../assets/font/Norse.otf);
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -8,12 +18,132 @@
 }
 
 html, body {
+  color: var(--text-color);
   height: 100%;
+  font-family: 'Roboto', 'system-ui';
+}
+
+button {
+  all: unset;
+  cursor: pointer;
+}
+
+button:hover {
+  color: var(--primary-color);
 }
 
 /* --- CSS VARIABLES --- */
 :root {
-  --primary-color: #000000;
-  --bg-color: #ffffff;
-  --text-color: #333333;
+  --primary-color:#3F72AF;
+  --bg-color: #DBE2EF;
+  --header-color: #F9F7F7;
+  --text-color: #112D4E;
+  --card-color: #112D4E;
+  --card-text-color: #DBE2EF;
+  --logo-color: none;
 }
+
+.dark-mode {
+  --primary-color:#00ADB5;
+  --bg-color: #393E46;
+  --header-color: #222831;
+  --text-color: #EEEEEE;
+  --card-color: #EEEEEE;
+  --card-text-color: #393E46;
+  --logo-color: invert();
+}
+
+.container {
+  display: flex;
+  flex-flow: column nowrap;
+  height: 100vh;
+  width: 100vw;
+}
+
+.header {
+  background-color: var(--header-color);
+  padding: 1rem;
+
+  display: flex;
+  justify-content: space-between;
+  align-items:center;
+}
+
+.header .logo {
+  display: flex;
+  align-items:center;
+}
+
+.header img {
+  filter: var(--logo-color);
+  height: 3rem;
+  margin-right: 1rem;
+}
+
+.header span {
+  color: var(--primary-color);
+  font-family: "Norse", "system-ui";
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.main-content {
+  background-color: var(--bg-color);
+  flex: 1 1 0;
+  padding: 1rem;
+
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.main-content h1[class=messageContainer] {
+  font-family: "Norse", "system-ui";
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.main-content .bookContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap: 1rem;
+}
+
+.main-content .bookCard {
+  background-color: var(--card-color);
+  border-radius: 0.5rem;
+  color: var(--card-text-color);
+  padding: 1rem;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.main-content .bookDetails {
+  display: flex;
+  flex-flow: column;
+  gap: 0.5rem;
+}
+
+.main-content .bookDetails .bookTitle {
+  color: var(--primary-color);
+  font-family:'Courier New', Courier, monospace;
+  font-weight: 700;
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.main-content .buttons {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 0.5rem;
+}
+
+.footer {
+  background-color: var(--header-color);
+  font-weight: bold;
+  text-align: center;
+  padding: 1rem;
+}
+

@@ -10,7 +10,40 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /**
- * Functions, Constructors and Global Variables
+ * Dark Mode Toggling
+ */
+
+window.onload = function() {
+  let currentTheme = localStorage.getItem('theme');
+
+  // Adjust visual theme of page
+  if (currentTheme == 'dark-mode') {
+      document.body.classList.toggle('dark-mode');
+      document.getElementById("toggleIcon").textContent = "sunny";
+  } else {
+      document.getElementById("toggleIcon").textContent = "bedtime";
+  }
+}
+
+function toggleMode() {
+    // Toggle dark mode on and off
+    document.body.classList.toggle('dark-mode');
+
+    // Save current theme for other webpages
+    let theme = document.body.classList.contains('dark-mode') ? 'dark-mode' : 'light-mode';
+    localStorage.setItem('theme', theme);
+
+    // Change toggle icon to opposite theme icon
+    if (theme == 'dark-mode') {
+        document.getElementById("toggleIcon").textContent = "sunny";
+    } else {
+        document.getElementById("toggleIcon").textContent = "bedtime";
+    }
+}
+
+/**
+ * Main Functions, Constructors 
+ * and Global Variables
  */
 
 const myLibrary = [ ];
@@ -41,17 +74,20 @@ function displayBook(book) {
   bookCard.classList.add("bookCard")
   bookCard.setAttribute("data-id", book.id);
 
+  const bookDetails = document.createElement("div");
+  bookDetails.classList.add("bookDetails");
+
   const pTitle = document.createElement("p");
   pTitle.classList.add("bookTitle");
   pTitle.textContent = `${book.title}`;
 
   const pAuthor = document.createElement("p");
   pAuthor.classList.add("bookAuthor");
-  pAuthor.textContent = `${book.author}`;
+  pAuthor.textContent = `by ${book.author}`;
 
   const pPages = document.createElement("p");
   pPages.classList.add("bookPages");
-  pPages.textContent = `${book.pages}`;
+  pPages.textContent = `Pages: ${book.pages}`;
 
   const pRead = document.createElement("p");
   pRead.classList.add("bookRead");
@@ -61,24 +97,37 @@ function displayBook(book) {
       : "You haven't read this book yet."
   }`;
 
+  bookDetails.appendChild(pTitle);
+  bookDetails.appendChild(pAuthor);
+  bookDetails.appendChild(pPages);
+  bookDetails.appendChild(pRead);
+
+  const buttons = document.createElement("div");
+  buttons.classList.add("buttons");
+
   const removeButton = document.createElement("button");
-  removeButton.textContent = "Remove";
+  const removeIcon = document.createElement("i");
+  removeIcon.classList.add("material-symbols-outlined");
+  removeIcon.textContent = "cancel";
   removeButton.addEventListener("click", removeBook);
 
   const readButton = document.createElement("button");
+  const readIcon = document.createElement("i");
+  readIcon.classList.add("material-symbols-outlined");
   if (book.read) {
-    readButton.textContent = "Unread";
+    readIcon.textContent = "visibility_off";
   } else {
-    readButton.textContent = "Read";
+    readIcon.textContent = "visibility";
   }
   readButton.addEventListener("click", readBook);
 
-  bookCard.appendChild(pTitle);
-  bookCard.appendChild(pAuthor);
-  bookCard.appendChild(pPages);
-  bookCard.appendChild(pRead);
-  bookCard.appendChild(removeButton);
-  bookCard.appendChild(readButton);
+  removeButton.appendChild(removeIcon);
+  readButton.appendChild(readIcon);
+  buttons.appendChild(removeButton);
+  buttons.appendChild(readButton);
+
+  bookCard.appendChild(bookDetails);
+  bookCard.appendChild(buttons);
   bookContainer.appendChild(bookCard);
 }
 
@@ -87,7 +136,7 @@ function displayBooksInLibrary() {
 }
 
 function removeBook(event) {
-  const bookCard = event.target.parentElement;
+  const bookCard = event.target.parentElement.parentElement.parentElement; // card -> buttons -> button -> icon
   const bookId = bookCard.dataset.id;
   const removedBook = myLibrary.find((book) => book.id === bookId);
 
@@ -106,7 +155,7 @@ function removeBook(event) {
 }
 
 function readBook(event) {
-  const bookCard = event.target.parentElement;
+  const bookCard = event.target.parentElement.parentElement.parentElement; // card -> buttons -> button -> icon
   const bookId = bookCard.dataset.id;
   const readBook = myLibrary.find((book) => book.id === bookId);
 
@@ -124,9 +173,9 @@ function refreshDisplay() {
     const bookContainer = document.querySelector(".bookContainer");
     bookContainer.replaceChildren();
     if (myLibrary.length === 0) {
-        messageContainer.textContent = "No books added. Add some!"
+        messageContainer.textContent = "NO BOOKS ADDED"
     } else {
-        messageContainer.textContent = ""
+        messageContainer.textContent = "MY LIBRARY"
     }
     displayBooksInLibrary();
 }
@@ -136,5 +185,10 @@ function refreshDisplay() {
  */
 
 function init() {
+    // Turn the plain data into a Book instance
+    addBook("The Hobbit", "JRR Tolkien", 295);
+    addBook("Pride and Prejudice", "Jane Austen", 400);
+    addBook("Monster", "Naoki Urasawa", 1000);
+
     refreshDisplay();
 }
