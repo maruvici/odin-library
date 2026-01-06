@@ -16,10 +16,10 @@
                 <span>Yggdrasil Archives</span>
             </div>
             <div class="buttons">
-                <button id="toggleButton" onclick="toggleMode()">
-                    <i class="material-symbols-outlined" id="toggleIcon"></i>
+                <button>
+                    <i class="material-symbols-outlined" id="dialogIcon">add_2</i>
                 </button>
-                <button onclick="addBook()">
+                <button id="toggleButton" onclick="toggleMode()">
                     <i class="material-symbols-outlined" id="toggleIcon"></i>
                 </button>
             </div>
@@ -31,6 +31,29 @@
         <div class="footer">
             <span>&copy 2026 Maruvici</span>
         </div>
+        <dialog>
+            <h1>Add a Book</h1>
+            <form id="bookForm" autocomplete="off">
+                <fieldset>
+                    <div class="formQuestion">
+                        <label for="bookTitle">Book Title:</label>
+                        <input type="text" id="bookTitle" name="bookTitle" required placeholder="Title">
+                    </div>
+                    <div class="formQuestion">
+                        <label for="bookAuthor">Author:</label>
+                        <input type="text" id="bookAuthor" name="bookAuthor" required placeholder="Name">
+                    </div>
+                    <div class="formQuestion">
+                        <label for="bookPages">Number of Pages:</label>
+                        <input type="number" min=1 max=5000 id="bookPages" name="bookPages" required placeholder="1-5000">
+                    </div>
+                    <div class="buttons">
+                        <button class="material-symbols-outlined" id="closeButton">cancel</button>
+                        <button type="submit" class="material-symbols-outlined" id="addButton">add_2</button>
+                    </div>
+                </fieldset>
+            </form>
+        </dialog>
     </div>
 </body>
 </html>

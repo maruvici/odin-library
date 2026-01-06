@@ -62,7 +62,7 @@ button:hover {
 
 .header {
   background-color: var(--header-color);
-  padding: 1rem;
+  padding: 1rem 2rem;
 
   display: flex;
   justify-content: space-between;
@@ -87,16 +87,22 @@ button:hover {
   font-weight: 700;
 }
 
+.header .buttons {
+  display: flex;
+  gap: 1rem;
+}
+
 .main-content {
   background-color: var(--bg-color);
   flex: 1 1 0;
-  padding: 1rem;
+  padding: 1.5rem 2rem 2rem 2rem;
 
   display: flex;
   flex-flow: column nowrap;
 }
 
-.main-content h1[class=messageContainer] {
+.main-content h1,
+dialog[open] h1 {
   font-family: "Norse", "system-ui";
   font-size: 3rem;
   margin-bottom: 1rem;
@@ -112,6 +118,7 @@ button:hover {
 .main-content .bookCard {
   background-color: var(--card-color);
   border-radius: 0.5rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
   color: var(--card-text-color);
   padding: 1rem;
 
@@ -147,3 +154,69 @@ button:hover {
   padding: 1rem;
 }
 
+/* Dialog CSS */
+
+dialog[open] {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 1rem rgba(255, 255, 255, 0.3);
+
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center; /* Horizontally centers content */
+    align-items: center; /* Vertically centers content */
+    height: 50vh; /* Ensures the container takes up the full viewport height */
+    width: 25vw;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+dialog[open] .buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.7); 
+}
+
+dialog[open] fieldset {
+  display: flex;
+  flex-flow: column nowrap;
+  border: none;
+  gap: 1rem;
+}
+
+dialog[open] form .formQuestion {
+  display: flex;
+  flex-flow: column nowrap;
+  flex: 1 1 0;
+  gap: 0.2rem;
+}
+
+dialog[open] form .formQuestion input {
+  border-radius: 0.5rem;
+  padding: 0.3rem;
+}
+
+dialog[open] form .formQuestion input:user-valid {
+  border: 3px solid green;
+}
+
+dialog[open] form .formQuestion input:user-invalid {
+  border: 3px solid red;
+}
+
+dialog[open] .buttons {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 1rem;
+}

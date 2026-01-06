@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
 /**
  * Dark Mode Toggling
  */
-
 window.onload = function() {
   let currentTheme = localStorage.getItem('theme');
 
@@ -45,7 +44,6 @@ function toggleMode() {
  * Main Functions, Constructors 
  * and Global Variables
  */
-
 const myLibrary = [ ];
 
 function Book(title, author, pages, read, id) {
@@ -183,12 +181,36 @@ function refreshDisplay() {
 /**
  * Main application logic
  */
-
 function init() {
-    // Turn the plain data into a Book instance
-    addBook("The Hobbit", "JRR Tolkien", 295);
-    addBook("Pride and Prejudice", "Jane Austen", 400);
-    addBook("Monster", "Naoki Urasawa", 1000);
-
     refreshDisplay();
 }
+
+/**
+ * Event Listeners
+ */
+const dialog = document.querySelector("dialog");
+const showButton = document.querySelector("#dialogIcon");
+const addButton = document.querySelector("#addButton");
+const closeButton = document.querySelector("#closeButton");
+
+showButton.addEventListener("click", () => {
+  dialog.showModal();
+});
+
+closeButton.addEventListener("click", () => {
+  dialog.close();
+});
+
+
+/**
+ * Form Handling
+ */
+const myForm = document.querySelector("#bookForm");
+myForm.addEventListener('submit', function(event) {
+  event.preventDefault();
+  const formData = new FormData(event.target);
+  const data = Object.fromEntries(formData.entries());
+  addBook(data.bookTitle, data.bookAuthor, data.bookPages);
+  this.reset();
+  dialog.close();
+});
