@@ -224,3 +224,51 @@ dialog[open] .buttons {
   justify-content: center;
   margin-top: 1rem;
 }
+
+/* Dialog CSS Styling */
+dialog[open] .buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.7); 
+}
+
+dialog[open] {
+  padding: 2rem;
+}
+
+dialog[open] fieldset {
+  display: flex;
+  flex-flow: column nowrap;
+  border: none;
+  gap: 1rem;
+}
+
+dialog[open] form .formQuestion {
+  display: flex;
+  flex-flow: column nowrap;
+  flex: 1 1 0;
+  gap: 0.2rem;
+}
+
+dialog[open] form .formQuestion input {
+  border-radius: 0.5rem;
+  padding: 0.3rem;
+}
+
+dialog[open] form .formQuestion input:user-valid {
+  border: 3px solid green;
+}
+
+dialog[open] form .formQuestion input:user-invalid {
+  border: 3px solid red;
+}
+
+dialog[open] .buttons {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
