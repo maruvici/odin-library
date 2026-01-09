@@ -161,7 +161,7 @@ class Book {
     const removeIcon = document.createElement("i");
     removeIcon.classList.add("material-symbols-outlined");
     removeIcon.textContent = "cancel";
-    removeButton.addEventListener("click", myLibrary.removeBook);
+    removeButton.addEventListener("click", (event) => myLibrary.removeBook(event));
 
     const readButton = document.createElement("button");
     const readIcon = document.createElement("i");
@@ -171,7 +171,7 @@ class Book {
     } else {
       readIcon.textContent = "visibility";
     }
-    readButton.addEventListener("click", myLibrary.readBook);
+    readButton.addEventListener("click", (event) => myLibrary.readBook(event));
 
     removeButton.appendChild(removeIcon);
     readButton.appendChild(readIcon);
